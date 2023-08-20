@@ -4,15 +4,27 @@ from llama_index import ListIndex, ServiceContext
 from llama_index.llms import OpenAI
 from llama_index.response_synthesizers import get_response_synthesizer
 from llama_index.schema import TextNode, NodeRelationship, RelatedNodeInfo
-from llama_index.llms.palm import PaLM
+from langchain.llms import VertexAI
 import vertexai
 
+
 class ServiceConfiguration:
-    def __init__(self, api_key):
-        self.llm = PaLM(api_key=api_key)
-    
+    def __init__(self, project_id, location, model_name):
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "developer_creds.json"
+        vertexai.init(project=project_id, location=location)
+        self.llm = VertexAI(
+            model_name=model_name,
+            max_output_tokens=256,
+            temperature=0.1,
+            top_p=0.8,
+            top_k=40,
+            verbose=True,
+        )
+        # self.llm = OpenAI(model=model_name, temperature=0, max_tokens=512)
+
     def get_service_context(self):
         return ServiceContext.from_defaults(llm=self.llm)
+
 
 class TextNodeManager:
     @staticmethod
@@ -25,11 +37,16 @@ class TextNodeManager:
     def _set_relationships(nodes):
         for idx, node in enumerate(nodes):
             if idx > 0:
-                node.relationships[NodeRelationship.PREVIOUS] = RelatedNodeInfo(node_id=nodes[idx - 1].node_id)
+                node.relationships[NodeRelationship.PREVIOUS] = RelatedNodeInfo(
+                    node_id=nodes[idx - 1].node_id
+                )
             if idx < len(nodes) - 1:
-                node.relationships[NodeRelationship.NEXT] = RelatedNodeInfo(node_id=nodes[idx + 1].node_id)
+                node.relationships[NodeRelationship.NEXT] = RelatedNodeInfo(
+                    node_id=nodes[idx + 1].node_id
+                )
 
         return nodes
+
 
 class ResponseParser:
     PATTERN = r"Response \d+: \n(.*?)(?:\n---------------------|$)"
@@ -38,21 +55,28 @@ class ResponseParser:
     def parse(response):
         return [resp.strip() for resp in re.findall(ResponseParser.PATTERN, response, re.DOTALL)]
 
+
 class PromptManager:
     def __init__(self):
-        self.short_line_description_prompt = "Give a simple one-line description of what the code does?"
-        self.explanation_prompt = ("Give an explanation in 40 words maximum for the given code base. "
-                                   "Don't include any code in your explanation. If the code is about import statements, "
-                                   "give an overall explanation for import statements.")
+        self.short_line_description_prompt = (
+            "Give a simple one-line description of what the code does?"
+        )
+        self.explanation_prompt = (
+            "Give an explanation in 40 words maximum for the given code base. "
+            "Don't include any code in your explanation. If the code is about import statements, "
+            "give an overall explanation for import statements."
+        )
         self.summary_prompt = "Give short summary for given codebase."
+
     def get_short_summaries_prompt(self):
         return self.short_line_description_prompt
-    
+
     def get_explanation_prompt(self):
         return self.explanation_prompt
-    
+
     def get_summary_prompt(self):
         return self.summary_prompt
+
 
 class QueryHandler:
     def __init__(self, nodes, service_context):
@@ -61,8 +85,8 @@ class QueryHandler:
         self.prompt_manager = PromptManager()
 
     def get_response(self, prompt="short_summaries"):
-        query = ''
-        response_mode = ''
+        query = ""
+        response_mode = ""
         if prompt == "short_summaries":
             query = self.prompt_manager.get_short_summaries_prompt()
             response_mode = "accumulate"
