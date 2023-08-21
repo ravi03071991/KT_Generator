@@ -5,8 +5,6 @@ Repository of the code base for KT Generation process that we worked at LifeSigh
 ## Repo structure
 
 - Code
-  - KT Generator
-  - Code QA
 - Presentation
 - Readme.md
 
@@ -21,6 +19,3 @@ This folder contains the code base for the KT Generation process.
     - `DIDVideoGenerator.py`: This file generates the DID video avatar using the code explainations for all the chunks.
     - `CreateVideo.py`: This file stitches the final video using the videos and the code snippets and the summary.
     - `main.py`: This file is the main file that runs the entire process.
-- Code QA
-  - `create_index.py`: This file creates the index for the code base.
-  - `query_index.py`: This file queries the index created on the code base.

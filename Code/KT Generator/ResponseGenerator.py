@@ -1,25 +1,19 @@
 import os
 import re
-from llama_index import ListIndex, ServiceContext
+
+from llama_index import ListIndex
+from llama_index import ServiceContext
 from llama_index.llms import OpenAI
+from llama_index.llms.palm import PaLM
 from llama_index.response_synthesizers import get_response_synthesizer
-from llama_index.schema import TextNode, NodeRelationship, RelatedNodeInfo
-from langchain.llms import VertexAI
-import vertexai
+from llama_index.schema import NodeRelationship
+from llama_index.schema import RelatedNodeInfo
+from llama_index.schema import TextNode
 
 
 class ServiceConfiguration:
-    def __init__(self, project_id, location, model_name):
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "developer_creds.json"
-        vertexai.init(project=project_id, location=location)
-        self.llm = VertexAI(
-            model_name=model_name,
-            max_output_tokens=256,
-            temperature=0.1,
-            top_p=0.8,
-            top_k=40,
-            verbose=True,
-        )
+    def __init__(self, api_key):
+        self.llm = PaLM(api_key=api_key)
         # self.llm = OpenAI(model=model_name, temperature=0, max_tokens=512)
 
     def get_service_context(self):

@@ -7,14 +7,11 @@ from ResponseGenerator import *
 
 import openai
 
-openai.api_key = "<OPENAI-KEY>"
-
-project_id = "glanceai-prod-5aea"
-location = "us-central1"
-model_name = "text-bison@001"
+# openai.api_key = "<OPENAI-KEY>"
+model_api_key = "<PALM_API_KEY>"
 
 save_path = "./kt_gen3"
-avatar_image_url = "https://tv.glance-cdn.com/stage/ravi1.png"
+avatar_image_url = "<AVATAR_IMAGE_URL>"
 test_code = "test_code_google_calender.py"
 
 # Split the code using parser
@@ -30,7 +27,7 @@ generate_carbon_snippets(extracted_elements, save_path)
 
 # %%
 # Generate Explainations and Summaries
-service_context_manager = ServiceConfiguration(project_id, location, model_name)
+service_context_manager = ServiceConfiguration(model_api_key)
 service_context = service_context_manager.get_service_context()
 text_node_manager = TextNodeManager()
 response_parse_manager = ResponseParser()
