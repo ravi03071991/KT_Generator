@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "kt-generator"
+version = "0.1.0"
+description = ""
+authors = ["CL"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+openai = "^0.27.8"
+llama-index = "^0.8.5.post2"
+moviepy = "^1.0.3"
+carbon = "^1.1.10"
+whisper = "^1.1.10"
+py-carbon = "^1.0.4"
+aiofiles = "^23.2.1"
+nltk = "^3.8.1"
+pillow = "9.5.0"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

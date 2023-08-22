@@ -12,9 +12,9 @@ from llama_index.schema import TextNode
 
 
 class ServiceConfiguration:
-    def __init__(self, api_key):
-        self.llm = PaLM(api_key=api_key)
-        # self.llm = OpenAI(model=model_name, temperature=0, max_tokens=512)
+    def __init__(self, model_name="gpt-4"):
+        # self.llm = PaLM(api_key=api_key)
+        self.llm = OpenAI(model=model_name, temperature=0, max_tokens=512)
 
     def get_service_context(self):
         return ServiceContext.from_defaults(llm=self.llm)
@@ -43,7 +43,7 @@ class TextNodeManager:
 
 
 class ResponseParser:
-    PATTERN = r"Response \d+: \n(.*?)(?:\n---------------------|$)"
+    PATTERN = r"Response \d+: (.*?)(?:\n---------------------|$)"
 
     @staticmethod
     def parse(response):

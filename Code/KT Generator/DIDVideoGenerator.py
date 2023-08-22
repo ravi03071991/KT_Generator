@@ -1,6 +1,10 @@
 import json
 import requests
 import time
+import os
+from dotenv import load_dotenv
+
+load_dotenv() 
 
 class DIDVideoGeneration:
     BASE_URL = "https://api.d-id.com/talks"
@@ -8,7 +12,7 @@ class DIDVideoGeneration:
         "accept": "application/json",
         "content-type": "application/json",
         # NOTE: Avoid hardcoding sensitive information. Ideally, this should be loaded securely
-        "authorization": "Basic ZG1saWFHRjJZV2RoY25kaGJEVkFaMjFoYVd3dVkyOXQ6ZlVGdlE4OXFtRnVKaTczODQ3UFFW"
+        "authorization": os.environ["DID_API_KEY"]
     }
 
     def __init__(self, source_url):

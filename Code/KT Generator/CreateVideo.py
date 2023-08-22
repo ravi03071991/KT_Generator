@@ -27,7 +27,7 @@ def create_circular_video(video, video_path):
     audio = AudioFileClip(video_path)
 
     # Combine the masked video with the original audio
-    video_with_mask = video_with_mask.with_audio(audio)
+    video_with_mask = video_with_mask.set_audio(audio)
     return video_with_mask
 
 
@@ -38,7 +38,7 @@ def get_chunk_clip(video_path, image_path):
     video = video.resize(0.7)
 
     # Set the duration of the image clip to match the video duration
-    image = image.with_duration(video.duration)
+    image = image.set_duration(video.duration)
 
     # Convert the masked frames into a VideoClip
     video_with_mask = create_circular_video(video, video_path)
