@@ -6,15 +6,19 @@ from DIDVideoGenerator import *
 from ResponseGenerator import *
 
 import openai
+import os
+from dotenv import load_dotenv
 
-# openai.api_key = "<OPENAI-KEY>"
-model_api_key = "<PALM_API_KEY>"
+load_dotenv()  # take environment variables from .env.
+
+openai.api_key = os.environ["OPENAI_API_KEY"]
+# model_api_key = "<PALM_API_KEY>"
 
 save_path = "./kt_gen3"
-avatar_image_url = "<AVATAR_IMAGE_URL>"
-test_code = "test_code_google_calender.py"
+avatar_image_url = "https://gcdnb.pbrd.co/images/UaLr3QRi4IDq.png"
+test_code = "slack_util.py"
 
-# Split the code using parser
+# # Split the code using parser
 with open(test_code, "r") as f:
     source = f.read()
 
@@ -27,7 +31,7 @@ generate_carbon_snippets(extracted_elements, save_path)
 
 # %%
 # Generate Explainations and Summaries
-service_context_manager = ServiceConfiguration(model_api_key)
+service_context_manager = ServiceConfiguration()
 service_context = service_context_manager.get_service_context()
 text_node_manager = TextNodeManager()
 response_parse_manager = ResponseParser()
