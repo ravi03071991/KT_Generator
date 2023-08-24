@@ -16,6 +16,7 @@ aiofiles = "^23.2.1"
 nltk = "^3.8.1"
 pillow = "9.5.0"
 python-dotenv = "^1.0.0"
+setuptools = "^68.1.2"
 
 
 [build-system]
