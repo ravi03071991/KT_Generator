@@ -17,8 +17,12 @@ nltk = "^3.8.1"
 pillow = "9.5.0"
 python-dotenv = "^1.0.0"
 setuptools = "^68.1.2"
+poethepoet = "^0.22.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+run         = "python Code/KT\\ Generator/main.py"

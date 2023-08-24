@@ -11,7 +11,8 @@ Repository of the code base for KT Generation process that we worked at LifeSigh
 ## Setup
 
 1. Copy `Code/KT Generator/.env.sample` to `Code/KT Generator/.env` and fill in the values.
-
+2. `$ poetry install` to install all the dependencies.
+3. `$ poetry poe -h` to list all tasks
 
 ### Code
 
