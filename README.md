@@ -8,11 +8,17 @@ Repository of the code base for KT Generation process that we worked at LifeSigh
 - Presentation
 - Readme.md
 
+## Prereqs
+1. ffmpeg
+2. poetry
+
 ## Setup
 
 1. Copy `Code/KT Generator/.env.sample` to `Code/KT Generator/.env` and fill in the values.
-2. `$ poetry install` to install all the dependencies.
-3. `$ poetry poe -h` to list all tasks
+2. create a file `kt_gen3` in the root directory.
+
+## Notes
+1. Default model is `gpt-4`. Pass the required model to service configuration to change.
 
 ### Code
 

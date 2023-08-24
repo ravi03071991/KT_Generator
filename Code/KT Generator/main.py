@@ -31,6 +31,7 @@ generate_carbon_snippets(extracted_elements, save_path)
 
 # %%
 # Generate Explainations and Summaries
+# model_name = "gpt-4" is the default. Modify as required.
 service_context_manager = ServiceConfiguration()
 service_context = service_context_manager.get_service_context()
 text_node_manager = TextNodeManager()
