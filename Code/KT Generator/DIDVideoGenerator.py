@@ -38,12 +38,20 @@ class DIDVideoGeneration:
             "source_url": self.source_url
         }
         response = requests.post(self.BASE_URL, json=payload, headers=self.HEADERS)
-        logger.info(response)
         return json.loads(response.text)["id"]
 
     def get_talk(self, talk_id):
-        response = requests.get(f"{self.BASE_URL}/{talk_id}", headers=self.HEADERS)
-        return json.loads(response.text)["result_url"]
+        retries = 5
+        logger.info("Waiting for video to be generated...")
+        logger.info(f"Talk ID: {talk_id}")
+        while retries > 0:
+            logger.info(f"Retries left: {retries}")
+            response = requests.get(f"{self.BASE_URL}/{talk_id}", headers=self.HEADERS)
+            if "result_url" in json.loads(response.text):
+               return json.loads(response.text)["result_url"]
+            else:
+                time.sleep(30)
+                retries-=1
 
     def download_video(self, result_url, folder_name, output_file_name):
         response = requests.get(result_url)
@@ -53,6 +61,5 @@ class DIDVideoGeneration:
 
     def process_chunk(self, chunk, i, folder_name):
         talk_id = self.create_talk(chunk)
-        time.sleep(60)  # Wait for processing
         result_url = self.get_talk(talk_id)
         self.download_video(result_url, folder_name, f"chunk_{i}.mp4")
