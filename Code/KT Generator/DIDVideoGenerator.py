@@ -2,6 +2,7 @@ import json
 import requests
 import time
 import os
+from loguru import logger
 from dotenv import load_dotenv
 
 load_dotenv() 
@@ -37,6 +38,7 @@ class DIDVideoGeneration:
             "source_url": self.source_url
         }
         response = requests.post(self.BASE_URL, json=payload, headers=self.HEADERS)
+        logger.info(response)
         return json.loads(response.text)["id"]
 
     def get_talk(self, talk_id):

@@ -1,6 +1,7 @@
 import numpy as np
 from moviepy.editor import *
 import os
+from loguru import logger
 
 
 def circular_mask(width, height):
@@ -50,6 +51,7 @@ def get_chunk_clip(video_path, image_path):
 
 
 def stitch_video(save_path, video_paths, image_paths):
+    logger.info("Stitching video and images together...")
     summary_video_path = os.path.join(save_path, "chunk_summaries.mp4")
     summary_clip = VideoFileClip(summary_video_path)
 

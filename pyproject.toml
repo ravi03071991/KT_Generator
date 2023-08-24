@@ -18,6 +18,7 @@ pillow = "9.5.0"
 python-dotenv = "^1.0.0"
 setuptools = "^68.1.2"
 poethepoet = "^0.22.0"
+loguru = "^0.7.0"
 
 
 [build-system]
