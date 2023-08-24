@@ -8,6 +8,11 @@ Repository of the code base for KT Generation process that we worked at LifeSigh
 - Presentation
 - Readme.md
 
+## Setup
+
+1. Copy `Code/KT Generator/.env.sample` to `Code/KT Generator/.env` and fill in the values.
+
+
 ### Code
 
 This folder contains the code base for the KT Generation process.

@@ -1,0 +1,8 @@
+# IDE
+.idea/
+
+# OS
+.DS_Store
+
+# Project
+.env
