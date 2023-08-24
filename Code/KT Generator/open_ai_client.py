@@ -3,9 +3,11 @@ from enum import Enum
 from loguru import logger
 import openai
 
+PORTKEY_API_KEY = os.getenv("PORTKEY_API_KEY")
+assert PORTKEY_API_KEY, "PORTKEY_API_KEY is not set!"
+
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 assert OPENAI_API_KEY, "OPENAI_API_KEY is not set!"
-openai.api_key = OPENAI_API_KEY
 
 
 CLASS_EXPLAINATION_PROMPT = """
@@ -54,6 +56,7 @@ Rules:
 4. Ignore error management & validations
 """
 
+
 class OpenAIClient:
     def __init__(self, provided_history=None):
         self.history = provided_history
@@ -77,12 +80,19 @@ class OpenAIClient:
 
     def create_chat(self, message, temperature=0.8, presence_penalty=0, frequency_penalty=0):
         self.history.append({"role": "user", "content": message})
+        openai.api_base = "https://api.portkey.ai/v1/proxy"
         response = openai.ChatCompletion.create(
             model=os.environ.get("OPENAI_MODEL_ID"),
             messages=self.history,
             temperature=temperature,
             presence_penalty=presence_penalty,
             frequency_penalty=frequency_penalty,
+            headers={
+                "x-portkey-api-key": PORTKEY_API_KEY,
+                "x-portkey-mode": "proxy openai",
+                "x-portkey-retry-count": "4",
+                "x-portkey-cache": "simple"
+            }
         )
 
         response_content = response.choices[0].message["content"].strip()
@@ -92,7 +102,7 @@ class OpenAIClient:
 
     def get_history(self):
         return self.history
-    
+
     def reset_history(self):
         self.history = []
         self.setup_system()
