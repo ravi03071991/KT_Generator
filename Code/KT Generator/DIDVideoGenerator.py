@@ -26,7 +26,7 @@ class DIDVideoGeneration:
                 "subtitles": "false",
                 "provider": {
                     "type": "microsoft",
-                    "voice_id": "Guy"
+                    "voice_id": "en-US-JasonNeural"
                 },
                 "ssml": "false",
                 "input": text
@@ -41,16 +41,18 @@ class DIDVideoGeneration:
         return json.loads(response.text)["id"]
 
     def get_talk(self, talk_id):
-        retries = 5
+        retries = 3
         logger.info("Waiting for video to be generated...")
         logger.info(f"Talk ID: {talk_id}")
         while retries > 0:
             logger.info(f"Retries left: {retries}")
+            for i in range(4):
+                time.sleep(30)
+                logger.info(f"Time elapsed: {(i+1)*30} seconds")
             response = requests.get(f"{self.BASE_URL}/{talk_id}", headers=self.HEADERS)
             if "result_url" in json.loads(response.text):
                return json.loads(response.text)["result_url"]
             else:
-                time.sleep(30)
                 retries-=1
 
     def download_video(self, result_url, folder_name, output_file_name):

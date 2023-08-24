@@ -40,12 +40,12 @@ def get_method_name(method_declaration):
 
 
 save_path = "./kt_gen3"
-avatar_image_url = "https://gcdnb.pbrd.co/images/UaLr3QRi4IDq.png"
+avatar_image_url = "https://create-images-results.d-id.com/DefaultPresenters/William_m/thumbnail.jpeg"
 test_code = "slack_util.py"
 
 logger.info("Starting the processing...")
 
-# # Split the code using parser
+# Split the code using parser
 with open(test_code, "r") as f:
     source = f.read()
 
@@ -101,7 +101,7 @@ for index, chunk in enumerate(video_scripts):
 # %%
 # Stitch videos and images together
 video_paths = [os.path.join(save_path, f"chunk_{i}.mp4") for i in range(
-    len(extracted_elements))]
+    len(elements_for_images))]
 image_paths = [os.path.join(save_path, f"image_{i}.png") for i in range(
-    len(extracted_elements))]
+    len(elements_for_images))]
 stitch_video(save_path, video_paths, image_paths)
