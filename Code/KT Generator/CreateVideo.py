@@ -52,13 +52,14 @@ def get_chunk_clip(video_path, image_path):
 
 def stitch_video(save_path, video_paths, image_paths):
     logger.info("Stitching video and images together...")
-    summary_video_path = os.path.join(save_path, "chunk_summaries.mp4")
-    summary_clip = VideoFileClip(summary_video_path)
+    # summary_video_path = os.path.join(save_path, "chunk_summaries.mp4")
+    # summary_clip = VideoFileClip(summary_video_path)
 
-    summary_clip_circle = create_circular_video(summary_clip, summary_video_path)
+    # summary_clip_circle = create_circular_video(summary_clip, summary_video_path)
 
     final_clip = concatenate_videoclips(
-        [summary_clip_circle] + [get_chunk_clip(v, i) for v, i in zip(video_paths, image_paths)],
+        # [summary_clip_circle] + 
+        [get_chunk_clip(v, i) for v, i in zip(video_paths, image_paths)],
         method="compose",
     )
 
