@@ -12,6 +12,7 @@ from loguru import logger
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv()  # take environment variables from .env.
 
 open_ai_client = OpenAIClient()

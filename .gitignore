@@ -6,6 +6,7 @@
 
 # Project
 .env
+kt_gen3/*[.mp4,.png]
 
 ### Python template
 
@@ -151,6 +152,3 @@ cython_debug/
 # report
 allure-report
 allure-results
-
-# Generated Images
-kt_gen3
