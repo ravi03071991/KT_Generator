@@ -1,6 +1,6 @@
 # KT_Generator
 
-Repository of the code base for KT Generation process that we worked at LifeSight, Google Cloud and Searce GenAI Hackathon.
+Repository of the code base for KT Generation process that we worked at Google Cloud, Searce and LifeSight GenAI Hackathon.
 
 ## Repo structure
 
@@ -19,3 +19,12 @@ This folder contains the code base for the KT Generation process.
     - `DIDVideoGenerator.py`: This file generates the DID video avatar using the code explainations for all the chunks.
     - `CreateVideo.py`: This file stitches the final video using the videos and the code snippets and the summary.
     - `main.py`: This file is the main file that runs the entire process.
+    - `config.py`: This file contains the necessary api keys, model names and other variable details to run main file.
+    
+### Usage
+
+- Update details in `config.py` file and run `main.py` file to generate KT Video for your file.
+
+```bash
+python main.py
+```
