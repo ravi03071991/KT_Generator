@@ -4,15 +4,8 @@ from CodeParser import *
 from CreateVideo import *
 from DIDVideoGenerator import *
 from ResponseGenerator import *
-
+from config import *
 import openai
-
-# openai.api_key = "<OPENAI-KEY>"
-model_api_key = "<PALM_API_KEY>"
-
-save_path = "./kt_gen3"
-avatar_image_url = "<AVATAR_IMAGE_URL>"
-test_code = "test_code_google_calender.py"
 
 # Split the code using parser
 with open(test_code, "r") as f:
@@ -27,7 +20,7 @@ generate_carbon_snippets(extracted_elements, save_path)
 
 # %%
 # Generate Explainations and Summaries
-service_context_manager = ServiceConfiguration(model_api_key)
+service_context_manager = ServiceConfiguration(model_api_key, model_name)
 service_context = service_context_manager.get_service_context()
 text_node_manager = TextNodeManager()
 response_parse_manager = ResponseParser()
@@ -50,7 +43,7 @@ explaination_summaries = response_parse_manager.parse(explaination_response.resp
 
 # %%
 # Generate video
-video_processor = DIDVideoGeneration(source_url=avatar_image_url)
+video_processor = DIDVideoGeneration(source_url=avatar_image_url, did_authorization_key=did_authorization_key)
 
 video_processor.process_chunk(summary, "summaries", save_path)
 for index, chunk in enumerate(explaination_summaries):

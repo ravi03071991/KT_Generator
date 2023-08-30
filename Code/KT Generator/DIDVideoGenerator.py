@@ -3,16 +3,16 @@ import requests
 import time
 
 class DIDVideoGeneration:
-    BASE_URL = "https://api.d-id.com/talks"
-    HEADERS = {
+
+    def __init__(self, source_url, did_authorization_key):
+        self.source_url = source_url
+        self.BASE_URL = "https://api.d-id.com/talks"
+        self.HEADERS = {
         "accept": "application/json",
         "content-type": "application/json",
         # NOTE: Avoid hardcoding sensitive information. Ideally, this should be loaded securely
-        "authorization": "Basic ZG1saWFHRjJZV2RoY25kaGJEVkFaMjFoYVd3dVkyOXQ6ZlVGdlE4OXFtRnVKaTczODQ3UFFW"
+        "authorization": did_authorization_key
     }
-
-    def __init__(self, source_url):
-        self.source_url = source_url
 
     def create_talk(self, text):
         payload = {

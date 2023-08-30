@@ -9,17 +9,18 @@ from llama_index.response_synthesizers import get_response_synthesizer
 from llama_index.schema import NodeRelationship
 from llama_index.schema import RelatedNodeInfo
 from llama_index.schema import TextNode
-
+import openai
 
 class ServiceConfiguration:
-    def __init__(self, api_key):
-        self.llm = PaLM(api_key=api_key)
-        # self.llm = OpenAI(model=model_name, temperature=0, max_tokens=512)
+    def __init__(self, api_key, model_name):
+        if model_name == "PaLM":
+            self.llm = PaLM(api_key=api_key)
+        else:
+            openai.api_key = api_key
+            self.llm = OpenAI(model=model_name, temperature=0, max_tokens=512)
 
     def get_service_context(self):
         return ServiceContext.from_defaults(llm=self.llm)
-
-
 class TextNodeManager:
     @staticmethod
     def get_nodes(texts):
